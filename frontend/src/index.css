@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-espresso-50: #fbf9f6;
+  --color-espresso-100: #f4eee7;
+  --color-espresso-200: #e7dac9;
+  --color-espresso-300: #d5bfa6;
+  --color-espresso-400: #c1a281;
+  --color-espresso-500: #aa825f;
+  --color-espresso-600: #936b4d;
+  --color-espresso-700: #7b553e;
+  --color-espresso-800: #573c2c;
+  --color-espresso-900: #3a271d;
+  --color-espresso-950: #1b120d;
+
+  --color-brand-gold: #d97706;
+  --color-brand-cream: #faf7f2;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+}
+
+@utility glassmorphism {
+  background: rgba(27, 18, 13, 0.45);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(193, 162, 129, 0.08);
+}
+
+@utility glass-card {
+  background: rgba(27, 18, 13, 0.5);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(193, 162, 129, 0.07);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+@utility hover-glass-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    background: rgba(43, 29, 21, 0.65);
+    border-color: rgba(193, 162, 129, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1b120d;
+}
+::-webkit-scrollbar-thumb {
+  background: #573c2c;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aa825f;
+}
+
+/* Animations */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
