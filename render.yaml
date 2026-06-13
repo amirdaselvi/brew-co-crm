@@ -27,11 +27,14 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.0
 
-  - type: static
+  - type: web
     name: brew-co-crm-frontend
+    runtime: node
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    startCommand: npx serve -s dist -l $PORT
     envVars:
       - key: VITE_API_URL
         value: https://brew-co-crm-backend.onrender.com
+      - key: NODE_VERSION
+        value: 20.11.0
