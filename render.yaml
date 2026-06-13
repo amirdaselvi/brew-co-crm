@@ -1,0 +1,43 @@
+services:
+  # ── 1. CRM Backend API ────────────────────────────────────────────────────
+  - type: web
+    name: brew-co-crm-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false          # paste this in Render dashboard
+      - key: CHANNEL_STUB_URL
+        value: https://brew-co-channel-stub.onrender.com   # update after deploy
+      - key: CRM_RECEIPT_URL
+        value: https://brew-co-crm-backend.onrender.com    # update after deploy
+      - key: SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  # ── 2. Channel Stub Service ───────────────────────────────────────────────
+  - type: web
+    name: brew-co-channel-stub
+    runtime: python
+    rootDir: channel-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  # ── 3. React Frontend ─────────────────────────────────────────────────────
+  - type: web
+    name: brew-co-crm-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://brew-co-crm-backend.onrender.com    # update after deploy
+      - key: NODE_VERSION
+        value: 20.0.0
