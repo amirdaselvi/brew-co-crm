@@ -149,3 +149,7 @@ export const api = {
     return handleResponse(res);
   },
 };
+// Keep backend alive - ping every 10 minutes
+setInterval(() => {
+  fetch(`${import.meta.env.VITE_API_URL}/api/dashboard`).catch(() => { });
+}, 600000);
