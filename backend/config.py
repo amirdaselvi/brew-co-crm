@@ -1,4 +1,6 @@
+
 """Flask application configuration."""
+
 import os
 
 class Config:
@@ -13,8 +15,8 @@ class Config:
     # Claude API
     ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
     
-    # CRM callback URL (for channel service to call back)
+    # CRM callback URL
     CRM_CALLBACK_URL = os.environ.get('CRM_CALLBACK_URL', 'http://localhost:5000')
     
-    # CORS
-    CORS_ORIGINS = os.environ.get('CORS_ORIGINS', 'http://localhost:5173,http://localhost:3000').split(',')
+    # CORS - allow all origins
+    CORS_ORIGINS = "*"
