@@ -9,6 +9,20 @@ from models import db, Customer, Order, Segment, Campaign, Communication, Campai
 import ai_service
 import requests as http_requests
 
+import threading
+
+def keep_alive():
+    import time
+    while True:
+        time.sleep(840)
+        try:
+            import urllib.request
+            urllib.request.urlopen('https://brew-co-crm-backend.onrender.com/api/health')
+        except:
+            pass
+
+t = threading.Thread(target=keep_alive, daemon=True)
+t.start()
 
 def create_app():
     app = Flask(__name__)
