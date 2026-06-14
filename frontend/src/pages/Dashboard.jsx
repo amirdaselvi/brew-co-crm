@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
-import { 
-  Users, 
-  ShoppingBag, 
-  DollarSign, 
-  Send, 
-  Percent, 
+import {
+  Users,
+  ShoppingBag,
+  DollarSign,
+  Send,
+  Percent,
   Database,
   ArrowRight,
   Loader2
@@ -37,6 +37,10 @@ export default function Dashboard() {
   }, []);
 
   const handleSeed = async () => {
+    await fetchStats();
+  };
+
+  /*const handleSeed = async () => {
     try {
       setSeeding(true);
       await api.seedDatabase();
@@ -46,7 +50,7 @@ export default function Dashboard() {
     } finally {
       setSeeding(false);
     }
-  };
+  };*/
 
   if (loading && !stats) {
     return (
@@ -69,9 +73,9 @@ export default function Dashboard() {
   // Channel distribution data for Recharts
   const chartData = stats && stats.channel_distribution
     ? Object.keys(stats.channel_distribution).map(key => ({
-        name: key.toUpperCase(),
-        value: stats.channel_distribution[key]
-      }))
+      name: key.toUpperCase(),
+      value: stats.channel_distribution[key]
+    }))
     : [];
 
   const COLORS = ['#d97706', '#aa825f', '#7b553e', '#573c2c'];
@@ -175,15 +179,15 @@ export default function Dashboard() {
 
       {/* Main Charts & Campaigns Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        
+
         {/* Recent Campaigns (Left columns) */}
         <div className="lg:col-span-2 glass-card p-6 rounded-2xl space-y-5">
           <div className="flex justify-between items-center">
             <h3 className="font-display font-bold text-lg text-stone-100">
               Recent Campaigns
             </h3>
-            <Link 
-              to="/campaigns" 
+            <Link
+              to="/campaigns"
               className="text-amber-500 text-xs font-medium flex items-center space-x-1 hover:underline"
             >
               <span>View all campaigns</span>
@@ -194,8 +198,8 @@ export default function Dashboard() {
           {stats && stats.recent_campaigns.length === 0 ? (
             <div className="border border-dashed border-stone-850 p-12 text-center rounded-xl">
               <p className="text-stone-500 text-sm">No campaigns dispatched yet.</p>
-              <Link 
-                to="/campaigns" 
+              <Link
+                to="/campaigns"
                 className="inline-flex items-center space-x-2 text-amber-500 border border-amber-500/25 bg-amber-500/5 hover:bg-amber-500/10 px-4 py-2 mt-4 rounded-xl text-xs font-semibold transition"
               >
                 <span>Launch First Campaign</span>
@@ -230,13 +234,12 @@ export default function Dashboard() {
                         </span>
                       </td>
                       <td className="py-4">
-                        <span className={`text-[11px] px-2.5 py-1 rounded-full font-semibold border ${
-                          camp.status === 'completed' || camp.status === 'sent'
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                            : camp.status === 'sending'
+                        <span className={`text-[11px] px-2.5 py-1 rounded-full font-semibold border ${camp.status === 'completed' || camp.status === 'sent'
+                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                          : camp.status === 'sending'
                             ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 animate-pulse'
                             : 'bg-stone-800/40 text-stone-400 border-stone-700/50'
-                        }`}>
+                          }`}>
                           {camp.status}
                         </span>
                       </td>
@@ -244,7 +247,7 @@ export default function Dashboard() {
                         {camp.stats ? camp.stats.total_sent : '-'}
                       </td>
                       <td className="py-4 text-right text-stone-500 text-xs">
-                        {camp.sent_at ? new Date(camp.sent_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '-'}
+                        {camp.sent_at ? new Date(camp.sent_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '-'}
                       </td>
                     </tr>
                   ))}
@@ -284,14 +287,14 @@ export default function Dashboard() {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#1c1917', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1c1917',
                       borderColor: '#2e2a24',
                       borderRadius: '8px',
                       color: '#fafaf9',
                       fontSize: '12px'
-                    }} 
+                    }}
                   />
                 </PieChart>
               </ResponsiveContainer>
